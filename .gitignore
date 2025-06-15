@@ -134,3 +134,19 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+# === BACKEND ===
+
+# Ambiente virtual
+venv/
+.env
+*.env
+
+# Arquivos Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Logs
+*.log
