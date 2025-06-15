@@ -1,5 +1,4 @@
 // src/components/GameCard.jsx
-import React from 'react';
 import { useToast } from './Toast.jsx'; // Importa o hook useToast
 import { addGameToWishlist } from '../services/api.js'; // Importa apenas addGameToWishlist para esta view
 

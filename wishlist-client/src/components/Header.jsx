@@ -13,13 +13,13 @@ function Header() {
             to="/"
             className={`font-medium ${pathname === '/' ? 'text-blue-400 underline' : 'hover:text-blue-300 transition-colors duration-200'}`}
           >
-            Buscar Jogos
+            Jogos
           </Link>
           <Link
             to="/wishlist"
             className={`font-medium ${pathname === '/wishlist' ? 'text-blue-400 underline' : 'hover:text-blue-300 transition-colors duration-200'}`}
           >
-            Minha Wishlist
+            Wishlist
           </Link>
         </div>
       </nav>

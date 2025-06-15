@@ -14,4 +14,4 @@ class WishlistItem(WishlistItemBase):
     id: int
 
     class Config:
-        orm_mode = True # Habilita o modo ORM para que o Pydantic possa ler dados de objetos SQLAlchemy
+        orm_mode = True

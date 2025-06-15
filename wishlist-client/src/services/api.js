@@ -1,7 +1,7 @@
 // src/services/api.js
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8000'; // A URL base para sua API FastAPI
+const BASE_URL = 'http://localhost:8000';
 
 export async function fetchGames(params = {}) {
   try {
@@ -9,19 +9,19 @@ export async function fetchGames(params = {}) {
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar jogos na API:", error);
-    throw error; // Re-lança o erro para ser capturado no componente
+    throw error;
   }
 }
 
 export async function addGameToWishlist(gameId) {
   try {
-    // CORREÇÃO: Passar 'null' explicitamente como o corpo da requisição
-    // para garantir que nenhum corpo JSON vazio ({}) seja enviado.
-    const response = await axios.post(`${BASE_URL}/wishlist/from-freetogame?id=${gameId}`, null);
+    const response = await axios.post(`${BASE_URL}/wishlist/from-freetogame`, {
+      game_id: gameId,
+    });
     return response.data;
   } catch (error) {
     console.error("Erro ao adicionar jogo à wishlist:", error);
-    throw error; // Re-lança o erro para ser capturado no componente
+    throw error;
   }
 }
 
@@ -31,7 +31,7 @@ export async function fetchWishlist() {
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar wishlist:", error);
-    throw error; // Re-lança o erro para ser capturado no componente
+    throw error;
   }
 }
 
@@ -41,6 +41,6 @@ export async function removeGameFromWishlist(itemId) {
     return response.data;
   } catch (error) {
     console.error("Erro ao remover jogo da wishlist:", error);
-    throw error; // Re-lança o erro para ser capturado no componente
+    throw error;
   }
 }
