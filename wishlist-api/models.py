@@ -1,4 +1,4 @@
-# models.py
+# wishlist-api/models.py
 from sqlalchemy import Column, Integer, String
 from database import Base
 
@@ -9,4 +9,4 @@ class WishlistItem(Base):
     title = Column(String, index=True)
     platform = Column(String)
     thumbnail = Column(String)
-    game_url = Column(String)
+    game_url = Column(String, unique=True, index=True)

@@ -1,4 +1,4 @@
-// utils/getStoreFromURL.js
+// src/utils/getStoreFromURL.js
 export function getStoreFromURL(url) {
   if (url.includes("steampowered.com")) return "Steam";
   if (url.includes("epicgames.com")) return "Epic Games";
@@ -9,5 +9,7 @@ export function getStoreFromURL(url) {
   if (url.includes("playstation.com")) return "PlayStation";
   if (url.includes("gog.com")) return "GOG";
   if (url.includes("store.ubi.com")) return "Ubisoft";
+  if (url.includes("itch.io")) return "itch.io";
+  if (url.includes("amazon.com")) return "Amazon";
   return "Outros";
 }

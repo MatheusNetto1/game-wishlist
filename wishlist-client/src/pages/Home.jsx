@@ -1,21 +1,28 @@
 // src/pages/Home.jsx
 import { useEffect, useState } from 'react';
-import GameCard from '../components/GameCard';
-import Loader from '../components/Loader';
-import api from '../services/api';
-import { getStoreFromURL } from "../utils/getStoreFromURL";
+import GameCard from '../components/GameCard.jsx';
+import Loader from '../components/Loader.jsx';
+import { fetchGames } from '../services/api.js'; // Importa a função da API
+import { getStoreFromURL } from '../utils/getStoreFromURL.js'; // Importa a função utilitária
+import { useToast } from '../components/Toast.jsx'; // Importa o hook useToast
 
-export default function Home() {
+function Home() {
   const [gamesByStore, setGamesByStore] = useState({});
   const [loading, setLoading] = useState(true);
+  const { showToast } = useToast();
 
   useEffect(() => {
-    async function fetchGames() {
+    async function loadGames() {
+      setLoading(true);
       try {
-        const res = await api.get('/search-games?platform=pc');
+        const res = await fetchGames({ platform: 'pc' }); // Busca apenas jogos de PC para começar
         const grouped = {};
 
-        res.data.forEach((game) => {
+        if (res.length === 0) {
+          showToast('Nenhum jogo gratuito encontrado para PC.', 'info');
+        }
+
+        res.forEach((game) => {
           const store = getStoreFromURL(game.game_url);
           if (!grouped[store]) grouped[store] = [];
           grouped[store].push(game);
@@ -24,29 +31,37 @@ export default function Home() {
         setGamesByStore(grouped);
       } catch (error) {
         console.error("Erro ao buscar jogos:", error);
+        showToast('Erro ao carregar jogos. Tente novamente mais tarde.', 'error');
       } finally {
         setLoading(false);
       }
     }
-
-    fetchGames();
-  }, []);
+    loadGames();
+  }, [showToast]);
 
   if (loading) return <Loader />;
 
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold mb-6">Jogos Gratuitos por Loja</h1>
-      {Object.entries(gamesByStore).map(([store, games]) => (
-        <div key={store} className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">{store}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {games.map(game => (
-              <GameCard key={game.id} game={game} />
-            ))}
-          </div>
+    <div className="p-4 md:p-8">
+      <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-8 text-center">Jogos Gratuitos Atualmente</h1>
+      {Object.keys(gamesByStore).length === 0 && !loading ? (
+        <div className="text-center text-gray-600 text-xl py-10">
+          Nenhum jogo encontrado no momento.
         </div>
-      ))}
+      ) : (
+        Object.entries(gamesByStore).map(([store, games]) => (
+          <section key={store} className="mb-10 p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+            <h2 className="text-2xl md:text-3xl font-semibold text-gray-700 mb-6 border-b-2 pb-3 border-blue-200">{store}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {games.map(game => (
+                <GameCard key={game.id} game={game} />
+              ))}
+            </div>
+          </section>
+        ))
+      )}
     </div>
   );
 }
+
+export default Home;

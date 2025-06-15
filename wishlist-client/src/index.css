@@ -1,1 +1,7 @@
+/* src/index.css */
 @import "tailwindcss";
+
+/* Estilos globais personalizados */
+body {
+  font-family: 'Inter', sans-serif;
+}

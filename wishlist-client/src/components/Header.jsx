@@ -1,18 +1,24 @@
 // src/components/Header.jsx
 import { Link, useLocation } from 'react-router-dom';
 
-export default function Header() {
+function Header() {
   const { pathname } = useLocation();
 
   return (
-    <header className="bg-blue-600 text-white p-4 shadow-md">
-      <nav className="flex justify-between items-center max-w-7xl mx-auto">
-        <h1 className="text-xl font-bold">Game Wishlist</h1>
-        <div className="space-x-6 text-lg">
-          <Link to="/" className={pathname === '/' ? 'underline' : 'hover:underline'}>
+    <header className="bg-gray-800 text-white p-4 shadow-lg sticky top-0 z-10">
+      <nav className="flex flex-col sm:flex-row justify-between items-center max-w-7xl mx-auto">
+        <h1 className="text-2xl font-extrabold mb-2 sm:mb-0">Game Wishlist</h1>
+        <div className="flex space-x-6 text-lg">
+          <Link
+            to="/"
+            className={`font-medium ${pathname === '/' ? 'text-blue-400 underline' : 'hover:text-blue-300 transition-colors duration-200'}`}
+          >
             Buscar Jogos
           </Link>
-          <Link to="/wishlist" className={pathname === '/wishlist' ? 'underline' : 'hover:underline'}>
+          <Link
+            to="/wishlist"
+            className={`font-medium ${pathname === '/wishlist' ? 'text-blue-400 underline' : 'hover:text-blue-300 transition-colors duration-200'}`}
+          >
             Minha Wishlist
           </Link>
         </div>
@@ -20,3 +26,5 @@ export default function Header() {
     </header>
   );
 }
+
+export default Header;
