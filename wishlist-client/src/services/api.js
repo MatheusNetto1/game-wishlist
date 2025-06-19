@@ -1,11 +1,14 @@
 // src/services/api.js
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8000';
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:8000',
+  timeout: 10000, // 10 segundos
+});
 
 export async function fetchGames(params = {}) {
   try {
-    const response = await axios.get(`${BASE_URL}/search-games`, { params });
+    const response = await axiosInstance.get('/search-games', { params });
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar jogos na API:", error);
@@ -15,7 +18,7 @@ export async function fetchGames(params = {}) {
 
 export async function addGameToWishlist(gameId) {
   try {
-    const response = await axios.post(`${BASE_URL}/wishlist/from-freetogame`, {
+    const response = await axiosInstance.post('/wishlist/from-freetogame', {
       game_id: gameId,
     });
     return response.data;
@@ -27,7 +30,7 @@ export async function addGameToWishlist(gameId) {
 
 export async function fetchWishlist() {
   try {
-    const response = await axios.get(`${BASE_URL}/wishlist`);
+    const response = await axiosInstance.get('/wishlist');
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar wishlist:", error);
@@ -37,7 +40,7 @@ export async function fetchWishlist() {
 
 export async function removeGameFromWishlist(itemId) {
   try {
-    const response = await axios.delete(`${BASE_URL}/wishlist/${itemId}`);
+    const response = await axiosInstance.delete(`/wishlist/${itemId}`);
     return response.data;
   } catch (error) {
     console.error("Erro ao remover jogo da wishlist:", error);
