@@ -26,8 +26,8 @@ function GameCard({ game }) {
 
   return (
     <div
-      className="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-200 ease-in-out"
       data-testid="game-card"
+      className="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-200 ease-in-out"
     >
       <img
         src={game.thumbnail}
